@@ -16,7 +16,11 @@ class AnimalController extends Controller
     {
         return Animal::all();
     }
-
+    public function getAnimalCount()
+    {
+        $animalCount = Animal::count();
+        return response()->json(['count' => $animalCount]);
+    }
     /**
      * Show the form for creating a new resource.
      */
