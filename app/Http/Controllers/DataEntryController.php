@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/DataEntryController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Farmer;
@@ -17,37 +15,43 @@ class DataEntryController extends Controller
 {
     public function store(StoreDataEntryRequest $request)
     {
-        // Step 1: Find or create the farmer using first and last names
-        $farmer = Farmer::firstOrCreate(
+        // Step 1: Find or create the barangay
+        $barangay = Barangay::firstOrCreate(['name' => $request->barangay_name]);
+       
+
+        // Step 2: Find or create the farmer using first and last names and associate the barangay
+        $farmer = Farmer::updateOrCreate(
             [
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'contact' => $request->contact
-            ]        
-            
+                'contact' => $request->contact,
+            ],
+            [
+                'barangay_id' => $barangay->barangay_id, // Update or set the barangay_id
+            ]
         );
-        sleep(2);
-        // Step 2: Find or create the barangay
-        $barangay = Barangay::firstOrCreate(['name' => $request->barangay_name]);
-        sleep(2);
+        
+
         // Step 3: Find or create the animal
         $animal = Animal::firstOrCreate(
             ['Name' => $request->animal_name],
             ['Category' => $request->category]
         );
-        sleep(2);
+        
+
         // Step 4: Find or create the kind of animal (breed)
         $kindOfAnimal = KindOfAnimal::firstOrCreate(
             [
                 'Name' => $request->kind_of_animal,
-                'animal_id' => $animal->Animal_ID
+                'animal_id' => $animal->Animal_ID,
             ]
         );
-        sleep(2);
+        
+
         // Step 5: Set counts based on animal type
         $backyardCount = 0;
         $commercialCount = 0;
-        
+
         if ($animal->Category === 'commercial') {
             $commercialCount = $request->quantity;
         } else {
@@ -62,7 +66,8 @@ class DataEntryController extends Controller
             'backyard_count' => $backyardCount,
             'commercial_count' => $commercialCount,
         ]);
-        sleep(2);
+        
+
         // Step 7: Update YearlyData with aggregate counts
         $this->updateYearlyData($request->year, $kindOfAnimal->Kind_ID, $barangay->barangay_id);
 

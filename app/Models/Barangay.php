@@ -16,4 +16,9 @@ class Barangay extends Model
     protected $primaryKey = 'barangay_id';
 
     protected $fillable = ['name'];
+
+    public function farmers()
+    {
+        return $this->hasMany(Farmer::class, 'barangay_id', 'barangay_id');
+    }
 }

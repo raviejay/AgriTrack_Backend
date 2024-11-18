@@ -11,11 +11,17 @@ class Farmer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name','last_name', 'contact'];
+    protected $primaryKey = 'farmer_id';
+
+    protected $fillable = ['first_name','last_name', 'contact', 'barangay_id'];
 
     public function farmerData()
     {
-        return $this->hasMany(FarmerData::class);
+        return $this->hasMany(FarmerData::class, 'farmer_id', 'farmer_id');
+    }
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_id', 'barangay_id');
     }
 }
 
