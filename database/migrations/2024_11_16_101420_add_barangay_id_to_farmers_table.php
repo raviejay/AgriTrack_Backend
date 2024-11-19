@@ -9,7 +9,7 @@ class AddBarangayIdToFarmersTable extends Migration
     public function up()
     {
         Schema::table('farmers', function (Blueprint $table) {
-            $table->unsignedBigInteger('barangay_id')->after('contact');
+            $table->unsignedBigInteger('barangay_id')->nullable()->after('contact');
             $table->foreign('barangay_id')->references('barangay_id')->on('barangay')->onDelete('set null');
         });
     }

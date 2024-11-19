@@ -10,6 +10,7 @@ use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\BarangayCountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangayController;
 
 /*
 |-------------------------------------------------------------------------- 
@@ -27,6 +28,8 @@ Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserAuthController::class, 'login']);
 
 Route::post('/dataEntry', [DataEntryController::class, 'store']);
+
+Route::get('/barangay/search', [BarangayController::class, 'search']);
 
 Route::get('/Barangay/Data', [BarangayCountController::class, 'getBarangayCounts']);
 

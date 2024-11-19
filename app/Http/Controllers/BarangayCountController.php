@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\YearlyData;
-use App\Models\Barangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +14,10 @@ class BarangayCountController extends Controller
             ->select(
                 'barangay.name as barangay_name',
                 DB::raw('SUM(yearly_data.backyard_count) as total_backyard_count'),
-                DB::raw('SUM(yearly_data.commercial_count) as total_commercial_count')
+                DB::raw('SUM(yearly_data.commercial_count) as total_commercial_count'),
+                DB::raw('
+                    SUM(yearly_data.backyard_count) + SUM(yearly_data.commercial_count) as total
+                ')
             )
             ->groupBy('barangay.barangay_id', 'barangay.name')
             ->get();
@@ -24,4 +25,3 @@ class BarangayCountController extends Controller
         return response()->json($barangayCounts);
     }
 }
-
