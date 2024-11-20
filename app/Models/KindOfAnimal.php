@@ -26,4 +26,9 @@ class KindOfAnimal extends Model
     {
         return $this->belongsTo(Animal::class, 'animal_id', 'Animal_ID');
     }
+       // Add this relationship
+       public function yearlyData()
+       {
+           return $this->hasMany(YearlyData::class, 'kind_id', 'Kind_ID');
+       }
 }

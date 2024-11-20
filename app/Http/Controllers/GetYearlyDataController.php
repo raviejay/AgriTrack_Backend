@@ -106,7 +106,7 @@ class GetYearlyDataController extends Controller
     
             $response = $client->post('https://api.cohere.ai/generate', [
                 'headers' => [
-                    'Authorization' => 'Bearer 1isZ2ADKCE9c8UnmKt9V31YAV9a4GVHUaSpiBDs4',
+                    'Authorization' => 'Bearer '. env('COHERE_API_KEY'),
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [

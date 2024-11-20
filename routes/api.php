@@ -10,6 +10,10 @@ use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\BarangayCountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnimalDataController;
+use App\Http\Controllers\BarangayAnimalController;
+use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |-------------------------------------------------------------------------- 
@@ -30,6 +34,9 @@ Route::post('/dataEntry', [DataEntryController::class, 'store']);
 
 Route::get('/Barangay/Data', [BarangayCountController::class, 'getBarangayCounts']);
 
+Route::get('/animaldata', [AnimalDataController::class, 'getAnimalData']);
+
+Route::get('/barangay/data', [BarangayAnimalController::class, 'getBarangayData']);
 // Protected routes (authentication required)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/animal', [AnimalController::class, 'store']);
@@ -49,6 +56,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/farmers/data', [FarmerController::class, 'getFarmerData']);
     Route::get('/farmers/details', [FarmerController::class, 'getFarmerDetails']);
     // Add more protected routes here if needed
+
+    Route::post('/user/profile', [UserProfileController::class, 'storeOrUpdate']);
+    Route::get('/user/profile', [UserProfileController::class, 'show']);
+    Route::get('/usermanagement/data', [UserManagementController::class, 'getAllUserInfo']);
+    Route::delete('/usermanagement/delete/{id}', [UserManagementController::class, 'deleteUser']);
+    Route::put('/usermanagement/change-type/{id}', [UserManagementController::class, 'changeUserType']);
 });
 Route::middleware('auth:sanctum')->get('/user', [UserAuthController::class, 'getUserInfo']);
 

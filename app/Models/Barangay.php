@@ -21,4 +21,8 @@ class Barangay extends Model
     {
         return $this->hasMany(Farmer::class, 'barangay_id', 'barangay_id');
     }
+    public function YearlyData()
+    {
+        return $this->hasMany(YearlyData::class, 'barangay_id', 'barangay_id');
+    }
 }
