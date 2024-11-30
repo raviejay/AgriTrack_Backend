@@ -31,12 +31,14 @@ class UserAuthController extends Controller
 
         // Fetch the user type from the user profile
         $userType = $user->profile ? $user->profile->user_type : 'user'; // Default to 'user' if no profile
+        $userName = $user->name;
 
         return response()->json([
             'message' => 'Login successful',
             'user' => $user,
             'user_type' => $userType, // Add user type to response
             'token' => $token,
+            'name' => $userName,
         ], 200);
     }
 
